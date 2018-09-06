@@ -11,7 +11,15 @@ public class MainPresenter {
         this.findDataWeather = findDataWeather;
     }
 
-    void onResume() {
+    void onStart() {
+        if (mainView != null) {
+            mainView.showProgress();
+        }
+
+        findDataWeather.findItems(this::onFinished);
+    }
+
+    void onError() {
         if (mainView != null) {
             mainView.showProgress();
         }
@@ -21,8 +29,8 @@ public class MainPresenter {
 
     public void onFinished(Map<String, Object> items) {
         if (mainView != null) {
-            mainView.showData(items);
             mainView.hideProgress();
+            mainView.showData(items);
         }
     }
 

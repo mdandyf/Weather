@@ -4,7 +4,6 @@ import java.util.Map;
 
 public interface MainView {
     void showData(Map<String, Object> items);
-    void onRefresh();
     void onError();
     void showProgress();
     void hideProgress();
