@@ -3,8 +3,10 @@ package com.gojek.exercise.weather;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 
+import com.gojek.exercise.weather.model.Day;
 import com.gojek.exercise.weather.model.WeatherModel;
 import com.gojek.exercise.weather.request.RequestBlocks;
 import com.gojek.exercise.weather.request.RequestBuilder;
@@ -19,12 +21,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.gojek.exercise.weather.request.RequestBlocks.Days.Seven;
 import static com.gojek.exercise.weather.request.RequestBlocks.GetBy.CityName;
+import static com.gojek.exercise.weather.request.RequestBlocks.GetBy.NumDays;
 
 public class FindDataWeather {
 
@@ -49,27 +56,13 @@ public class FindDataWeather {
     }
 
     public void findItems(final OnFinishedListener listener) {
-        String url = "";
 
-        try {
-            // Query Data Current
-            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Current, "d7597bc705d6407b83155322180609", CityName, CITY);
-            Log.d("Query1", url);
-            connect = new ConnectInternet();
-            connect.execute(url);
-
-            // Query Data Forecast
-            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.History, "d7597bc705d6407b83155322180609", CityName, CITY, Seven);
-            Log.d("Query2", url);
-            connect = new ConnectInternet();
-            connect.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        queryCurrentData();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 listener.onFinished(getDataCurrent());
+                queryForecastData();
             }
         }, 3000);
 
@@ -88,6 +81,33 @@ public class FindDataWeather {
                 listener.onCheckingError(statusConnection);
             }
         }, 3000);
+    }
+
+    private void queryCurrentData() {
+        try {
+            String url = "";
+            // Query Data Current
+            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Current, "d7597bc705d6407b83155322180609", CityName, CITY);
+            Log.d("Query1", url);
+            connect = new ConnectInternet();
+            connect.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void queryForecastData() {
+        try {
+            // Query Data Forecast for 7 days
+            String url = "";
+            String numDays = Integer.toString(7);
+            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Forecast, "d7597bc705d6407b83155322180609", CityName, CITY, NumDays, numDays);
+            Log.d("Query2", url);
+            connect = new ConnectInternet();
+            connect.execute(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -126,12 +146,11 @@ public class FindDataWeather {
                 {
                     try {
                         jObj=new JSONObject(responseText);
-
                         weatherModelHistory = gson.fromJson(jObj.toString(), WeatherModel.class);
                         System.out.println("weatherModelHistory==============>"+weatherModelHistory);
                         for(int i = 0; i < weatherModelHistory.getForecast().getForecastday().size(); i++) {
                             String dataDayName = "dataDay" + Integer.toString(i);
-                            mapResult.put(dataDayName, weatherModelHistory.getForecast().getForecastday().get(i).getDay().getCondition());
+                            mapResult.put(dataDayName, convertDateToDay(weatherModelHistory.getForecast().getForecastday().get(i).getDate()));
                             String dataTemperatureForecast = "dataTemperatureForecast" + Integer.toString(i);
                             mapResult.put(dataTemperatureForecast, weatherModelHistory.getForecast().getForecastday().get(i).getDay().getAvgtempC());
                         }
@@ -145,6 +164,20 @@ public class FindDataWeather {
         }
 
         return mapResult;
+    }
+
+    private String convertDateToDay(String date) {
+        try {
+            SimpleDateFormat format1=new SimpleDateFormat("yyyy-MM-dd");
+            Date dt1= format1.parse(date);
+            SimpleDateFormat format2=new SimpleDateFormat("EEEE");
+            String finalDay=format2.format(dt1);
+            return finalDay;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private class ConnectInternet extends AsyncTask<String, Void, String> {
@@ -175,7 +208,7 @@ public class FindDataWeather {
                     }
                 }
             });
-            return responseText;
+            return null;
         }
 
     }

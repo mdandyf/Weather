@@ -90,7 +90,10 @@ public class RequestBlocks {
         PostalCode,
         Metar,
         iata,
-        IPAddress
+        IPAddress,
+        DateFrom,
+        DateEnd,
+        NumDays
     }
 
     public static class ReqestFor
@@ -140,6 +143,12 @@ public class RequestBlocks {
             return "q=" + IP;
         }
 
+        public static String DateFrom(String date) { return "dt=" + date; }
+
+        public static String DateEnd(String date) { return "end_dt=" + date; }
+
+        public static String NumDays(String date) { return "days=" + date; }
+
         public static String PrepareQueryParameter(GetBy getby, String value)
         {
             String queryParameter = "";
@@ -165,6 +174,15 @@ public class RequestBlocks {
                     break;
                 case IPAddress:
                     queryParameter = ReqestFor.IPAddress(value);
+                    break;
+                case DateFrom:
+                    queryParameter = ReqestFor.DateFrom(value);
+                    break;
+                case DateEnd:
+                    queryParameter = ReqestFor.DateEnd(value);
+                    break;
+                case NumDays:
+                    queryParameter = ReqestFor.NumDays(value);
                     break;
             }
             return queryParameter;

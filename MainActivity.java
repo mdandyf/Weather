@@ -52,9 +52,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
         List<String> listDay = new ArrayList<>();
         List<String> listTemperature = new ArrayList<>();
 
-        textTemperature.setText("---");
-        textCity.setText("---");
-
         for (Map.Entry entry : items.entrySet()) {
             String key = (String) entry.getKey();
             if(key.equalsIgnoreCase("dataTemperature")) {

@@ -14,6 +14,16 @@ public class RequestBuilder {
         return MethodTypeParemeters.GetParameters(methodType)+"?key="+key+"&"+ ReqestFor.PrepareQueryParameter(getBy, value)+"&"+ ReqestFor.PrepareDays(ofDays);
     }
 
+    public  static String PrepareRequest( MethodType methodType,String key, RequestBlocks.GetBy getBy, String param, RequestBlocks.GetBy getBy2, String fromDate, RequestBlocks.GetBy getBy3, String toDate) throws Exception
+    {
+        return MethodTypeParemeters.GetParameters(methodType)+"?key="+key+"&"+ ReqestFor.PrepareQueryParameter(getBy, param)+"&"+ ReqestFor.PrepareQueryParameter(getBy2, fromDate)+"&"+ ReqestFor.PrepareQueryParameter(getBy3, toDate);
+    }
+
+    public  static String PrepareRequest( MethodType methodType,String key, RequestBlocks.GetBy getBy, String param, RequestBlocks.GetBy getBy2, String param2) throws Exception
+    {
+        return MethodTypeParemeters.GetParameters(methodType)+"?key="+key+"&"+ ReqestFor.PrepareQueryParameter(getBy, param)+"&"+ ReqestFor.PrepareQueryParameter(getBy2, param2);
+    }
+
     public static String PrepareRequest(MethodType methodType, String key, RequestBlocks.GetBy getBy, String value) throws Exception
     {
         return MethodTypeParemeters.GetParameters(methodType)+ "?key="+ key+ "&"+ ReqestFor.PrepareQueryParameter(getBy, value);
