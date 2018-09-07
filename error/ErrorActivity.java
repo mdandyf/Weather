@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.gojek.exercise.weather.main.MainActivity;
 import com.gojek.exercise.weather.R;
 
-public class ErrorActivity extends AppCompatActivity implements ErrorView{
+public class ErrorActivity extends Activity implements ErrorView{
 
     private ErrorPresenter presenter;
     public static Activity activity;

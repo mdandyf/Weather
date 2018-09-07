@@ -1,5 +1,6 @@
 package com.gojek.exercise.weather.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends Activity implements MainView {
 
     private TextView textTemperature;
     private TextView textCity;
