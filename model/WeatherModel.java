@@ -22,6 +22,9 @@ public class WeatherModel implements Serializable{
     @SerializedName("forecast")
     Forecast forecast;
 
+    @SerializedName("history")
+    Forecast history;
+
     public Location getLocation()
     {
         return location;
@@ -47,6 +50,12 @@ public class WeatherModel implements Serializable{
     public void setForecast(Forecast mForecast)
     {
         this.forecast = mForecast;
+    }
+
+    public Forecast getHistory() {return history;}
+    public void setHistory(Forecast mHistory)
+    {
+        this.forecast = mHistory;
     }
 
 }

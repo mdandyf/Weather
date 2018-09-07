@@ -17,6 +17,16 @@ public class RequestBlocks {
             return "/forecast.json";
         }
 
+        public static String getHistory()
+        {
+            return "/history.json";
+        }
+
+        public static String getSearch()
+        {
+            return "/search.json";
+        }
+
         public static String GetParameters(MethodType methodType) throws Exception
         {
             String methodPara = "";
@@ -27,6 +37,12 @@ public class RequestBlocks {
                     break;
                 case Forecast:
                     methodPara = MethodTypeParemeters.getForecast();
+                    break;
+                case History:
+                    methodPara = MethodTypeParemeters.getHistory();
+                    break;
+                case Search:
+                    methodPara = MethodTypeParemeters.getSearch();
                     break;
 
             }
@@ -47,7 +63,9 @@ public class RequestBlocks {
     public enum MethodType
     {
         Current,
-        Forecast
+        Forecast,
+        History,
+        Search
     }
 
     public enum Days

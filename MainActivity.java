@@ -1,6 +1,10 @@
 package com.gojek.exercise.weather;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -10,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements MainView  {
+public class MainActivity extends AppCompatActivity implements MainView {
 
     private TextView textTemperature;
     private TextView textCity;
@@ -48,18 +52,21 @@ public class MainActivity extends AppCompatActivity implements MainView  {
         List<String> listDay = new ArrayList<>();
         List<String> listTemperature = new ArrayList<>();
 
+        textTemperature.setText("---");
+        textCity.setText("---");
+
         for (Map.Entry entry : items.entrySet()) {
             String key = (String) entry.getKey();
             if(key.equalsIgnoreCase("dataTemperature")) {
-                int temperature = (int) entry.getValue();
-                textTemperature.setText(Integer.toString(temperature) + "\u00B0");
+                double temperature = (double) entry.getValue();
+                textTemperature.setText(Double.toString(temperature) + "\u00B0");
             } else if(key.equalsIgnoreCase("dataCity")) {
                 textCity.setText((String) entry.getValue());
             } else if(key.contains("dataDay")) {
                 listDay.add((String) entry.getValue());
-            } else if(key.contains("dataTemperatureDetail")) {
-                int temperatureDetail = (int) entry.getValue();
-                listTemperature.add(Integer.toString(temperatureDetail) + "\u00B0");
+            } else if(key.contains("dataTemperatureForecast")) {
+                double temperatureDetail = (double) entry.getValue();
+                listTemperature.add(Double.toString(temperatureDetail) + "\u00B0");
             }
         }
 
@@ -69,9 +76,14 @@ public class MainActivity extends AppCompatActivity implements MainView  {
     }
 
     @Override
-    public void onError() {
+    public void showError() {
         Intent progressIntent = new Intent(MainActivity.this,ErrorActivity.class);
         MainActivity.this.startActivity(progressIntent);
+    }
+
+    @Override
+    public void hideError() {
+        ErrorActivity.activity.finish();
     }
 
     @Override
@@ -84,4 +96,5 @@ public class MainActivity extends AppCompatActivity implements MainView  {
     public void hideProgress() {
         ProgressActivity.activity.finish();
     }
+
 }
