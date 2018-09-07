@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -40,11 +41,14 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listView = inflater.inflate(R.layout.list_view, null);
+        View listView = inflater.inflate(R.layout.list_view,  parent, false);
+
         TextView textDay = (TextView) listView.findViewById(R.id.textDay);
         TextView textTemperature = (TextView) listView.findViewById(R.id.textTemperatureList);
+
         String valueDayString = valueDay.get(position);
         String valueTemperatureString = valueTemperature.get(position);
         if (valueDayString != null) {
