@@ -42,7 +42,7 @@ public class MainAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listView = inflater.inflate(R.layout.list_view, parent, false);
+        View listView = inflater.inflate(R.layout.list_view, null);
         TextView textDay = (TextView) listView.findViewById(R.id.textDay);
         TextView textTemperature = (TextView) listView.findViewById(R.id.textTemperatureList);
         String valueDayString = valueDay.get(position);

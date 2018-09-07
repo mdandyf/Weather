@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
         textCity = (TextView) findViewById(R.id.textCity);
         listView = (ListView) findViewById(R.id.listView);
         mainAdapter = new MainAdapter(this);
+        mainAdapter.setData(new ArrayList<>(), new ArrayList<>());
+        listView.setAdapter(mainAdapter);
 
         presenter = new MainPresenter(this, new FindDataWeather());
     }
@@ -67,8 +69,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
             }
         }
 
-        mainAdapter.setData(listDay, listTemperature);
-        mainAdapter.notifyDataSetChanged();
+        if(listDay.size() > 0) {
+            mainAdapter.setData(listDay, listTemperature);
+            mainAdapter.notifyDataSetChanged();
+        }
+
 
     }
 
@@ -76,11 +81,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void showError() {
         Intent progressIntent = new Intent(MainActivity.this,ErrorActivity.class);
         MainActivity.this.startActivity(progressIntent);
-    }
-
-    @Override
-    public void hideError() {
-        ErrorActivity.activity.finish();
     }
 
     @Override

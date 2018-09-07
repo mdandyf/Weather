@@ -84,30 +84,42 @@ public class FindDataWeather {
     }
 
     private void queryCurrentData() {
-        try {
-            String url = "";
-            // Query Data Current
-            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Current, "d7597bc705d6407b83155322180609", CityName, CITY);
-            Log.d("Query1", url);
-            connect = new ConnectInternet();
-            connect.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String url = "";
+                    // Query Data Current
+                    url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Current, "d7597bc705d6407b83155322180609", CityName, CITY);
+                    Log.d("Query1", url);
+                    connect = new ConnectInternet();
+                    connect.execute(url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     private void queryForecastData() {
-        try {
-            // Query Data Forecast for 7 days
-            String url = "";
-            String numDays = Integer.toString(7);
-            url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Forecast, "d7597bc705d6407b83155322180609", CityName, CITY, NumDays, numDays);
-            Log.d("Query2", url);
-            connect = new ConnectInternet();
-            connect.execute(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Query Data Forecast for 7 days
+                    String url = "";
+                    String numDays = Integer.toString(7);
+                    url = APIURL + RequestBuilder.PrepareRequest(RequestBlocks.MethodType.Forecast, "d7597bc705d6407b83155322180609", CityName, CITY, NumDays, numDays);
+                    Log.d("Query2", url);
+                    connect = new ConnectInternet();
+                    connect.execute(url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
 
