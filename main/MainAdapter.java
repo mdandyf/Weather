@@ -1,12 +1,16 @@
-package com.gojek.exercise.weather;
+package com.gojek.exercise.weather.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.gojek.exercise.weather.R;
 
 import java.util.List;
 
@@ -41,11 +45,9 @@ public class MainAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View listView = inflater.inflate(R.layout.list_view,  parent, false);
-
+        View listView = inflater.inflate(R.layout.list_view, parent, false);
         TextView textDay = (TextView) listView.findViewById(R.id.textDay);
         TextView textTemperature = (TextView) listView.findViewById(R.id.textTemperatureList);
 

@@ -1,4 +1,4 @@
-package com.gojek.exercise.weather;
+package com.gojek.exercise.weather.main;
 
 import android.os.AsyncTask;
 import android.os.Handler;

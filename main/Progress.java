@@ -1,4 +1,4 @@
-package com.gojek.exercise.weather;
+package com.gojek.exercise.weather.main;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class ProgressActivity extends AppCompatActivity {
+import com.gojek.exercise.weather.R;
+
+public class Progress extends AppCompatActivity {
 
     public static Activity activity;
     Animation rotation;

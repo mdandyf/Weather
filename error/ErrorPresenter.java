@@ -1,8 +1,4 @@
-package com.gojek.exercise.weather;
-
-import android.content.Intent;
-
-import java.util.Map;
+package com.gojek.exercise.weather.error;
 
 public class ErrorPresenter {
     private ErrorView errorView;

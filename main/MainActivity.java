@@ -1,16 +1,15 @@
-package com.gojek.exercise.weather;
+package com.gojek.exercise.weather.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.gojek.exercise.weather.R;
+import com.gojek.exercise.weather.error.ErrorActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mainAdapter = new MainAdapter(this);
         mainAdapter.setData(new ArrayList<>(), new ArrayList<>());
         listView.setAdapter(mainAdapter);
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        listView.startAnimation(animation);
 
         presenter = new MainPresenter(this, new FindDataWeather());
     }
@@ -87,13 +89,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void showProgress() {
-        Intent progressIntent = new Intent(MainActivity.this,ProgressActivity.class);
+        Intent progressIntent = new Intent(MainActivity.this,Progress.class);
         MainActivity.this.startActivity(progressIntent);
     }
 
     @Override
     public void hideProgress() {
-        ProgressActivity.activity.finish();
+        Progress.activity.finish();
     }
+
 
 }
